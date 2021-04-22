@@ -19,10 +19,14 @@ export const ProjectList = () => {
 
     useEffect(() => {
         axios.get(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`).then((response) => {
-            if (response.statusText === "OK") {
-                setList(response.data)
+            if (response.statusText === "OK") {setList(response.data)
             }
         })
+
+
+
+
+        
     }, [debounceParam])
 
     useMount(() => {
