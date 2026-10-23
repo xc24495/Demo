@@ -1,3 +1,43 @@
+def collinear(p1, p2, p3):
+    return (p2[0] - p1[0]) * (p3[1] - p1[1]) == (p2[1] - p1[1]) * (p3[0] - p1[0])
+
+pts = [tuple(p) for p in coordinates]
+n = len(pts)
+if n <= 1:
+    return n
+
+full_mask = (1 << n) - 1
+INF = float('inf')
+dp = [INF] * (1 << n)
+dp[0] = 0
+
+for mask in range(1 << n):
+    if dp[mask] == INF:
+        continue
+    first = 0
+    while first < n and (mask & (1 << first)):
+        first += 1
+    if first >= n:
+        continue
+    line_mask = 1 << first
+    dp[mask | line_mask] = min(dp[mask | line_mask], dp[mask] + 1)
+    for j in range(first + 1, n):
+        line_mask = 0
+        for k in range(n):
+            if collinear(pts[first], pts[j], pts[k]):
+                line_mask |= (1 << k)
+        new_mask = mask | line_mask
+        if dp[new_mask] > dp[mask] + 1:
+            dp[new_mask] = dp[mask] + 1
+return dp[full_mask]
+
+
+
+
+
+
+
+
 # Write your code here
 import bisect
 on_points = [d for i, d in enumerate(dist) if systemState[i]==1]
