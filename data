@@ -1,0 +1,10 @@
+# Write your code here
+    if num < 2:
+        return []
+    sieve = [True] * (num + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(num ** 0.5) + 1):
+        if sieve[i]:
+            sieve[i*i : num+1 : i] = [False]*len(sieve[i*i : num+1 : i])
+    primes = [x for x, is_p in enumerate(sieve) if is_p]
+    return primes
