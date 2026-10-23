@@ -1,2 +1,7 @@
 # Write your code here
+total = 0
+    for i in range(1, len(systemState)):
+        if systemState[i] == 0:
+            total += dist[i] - dist[i-1]
+    return total
 
